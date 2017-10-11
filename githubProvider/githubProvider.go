@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"strings"
 
-	tu "../tutils"
+	tu "github.com/toshbrown/GHR/tutils"
 	"github.com/google/go-github/github"
 	"golang.org/x/oauth2"
 )
