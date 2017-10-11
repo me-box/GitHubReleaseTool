@@ -14,4 +14,4 @@ USER ghr
 WORKDIR /
 COPY --from=gobuild /ghrelease .
 
-CMD ["./ghrelease"]
+ENTRYPOINT ["./ghrelease"]
