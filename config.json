@@ -3,7 +3,7 @@
 	"AccessToken": "",
 	"MainRepo": ["toshbrown","GHR"],
 	"CoreRepos":[
-		["toshbrown","ghrelease-core-test"]
+		["toshbrown","GHR-core-test"]
 	],
-	"OtherRepos": [["toshbrown","ghrelease-other-test"]]
+	"OtherRepos": [["toshbrown","GHR-other-test"]]
 }
