@@ -45,7 +45,7 @@ func (ghp *GithubProvider) GenerateReleaseText(mainRepo []string, coreRepos [][]
 	releaseText = append(releaseText, "# Changes since last version:\n")
 	releaseText = append(releaseText, "## Changes to "+mainRepo[0]+"/"+mainRepo[1]+":\n")
 	for _, change := range changes {
-		releaseText = append(releaseText, fmt.Sprintf("  - %s issue %s/%s/pull/%d \n", change.Title, mainRepo[0], mainRepo[1], change.PrNum))
+		releaseText = append(releaseText, fmt.Sprintf("  - %s see %s/%s/pull/%d \n", change.Title, mainRepo[0], mainRepo[1], change.PrNum))
 	}
 	releaseText = append(releaseText, "# Changes to core repositories:\n")
 	for _, coreRepo := range coreRepos {
@@ -53,7 +53,7 @@ func (ghp *GithubProvider) GenerateReleaseText(mainRepo []string, coreRepos [][]
 		tu.CheckWarn(changeErr)
 		releaseText = append(releaseText, "## Changes to "+coreRepo[0]+"/"+coreRepo[1]+":\n")
 		for _, coreChange := range coreChanges {
-			releaseText = append(releaseText, fmt.Sprintf("  - %s issue %s/%s/pull/%d \n", coreChange.Title, coreRepo[0], coreRepo[1], coreChange.PrNum))
+			releaseText = append(releaseText, fmt.Sprintf("  - %s see %s/%s/pull/%d \n", coreChange.Title, coreRepo[0], coreRepo[1], coreChange.PrNum))
 		}
 	}
 	fmt.Println("--------------------------------------------------")
