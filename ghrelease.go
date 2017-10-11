@@ -7,9 +7,9 @@ import (
 	"os"
 	"strings"
 
-	config "github.com/Toshbrown/GHR/config"
-	"github.com/Toshbrown/GHR/githubProvider"
-	tu "github.com/Toshbrown/GHR/tutils"
+	config "github.com/toshbrown/GHR/config"
+	"github.com/toshbrown/GHR/githubProvider"
+	tu "github.com/toshbrown/GHR/tutils"
 )
 
 func main() {
