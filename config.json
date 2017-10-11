@@ -1,0 +1,9 @@
+{
+    "Username":"toshBrown",
+	"AccessToken": "",
+	"MainRepo": ["toshbrown","GHR"],
+	"CoreRepos":[
+		["toshbrown","ghrelease-core-test"]
+	],
+	"OtherRepos": [["toshbrown","ghrelease-other-test"]]
+}
