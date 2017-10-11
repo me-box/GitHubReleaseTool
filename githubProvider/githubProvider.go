@@ -192,8 +192,11 @@ func (ghp *GithubProvider) getChangesSinceRelease(release *github.RepositoryRele
 func (ghp *GithubProvider) calculateNextVersion(currentVersion *string, major *bool, minor *bool, patch *bool) string {
 
 	var nextVersion string
+	sp := strings.Split(*currentVersion, ".")
+	if len(sp) < 3 {
+		sp = []string{"0", "0", "0"}
+	}
 	if *major {
-		sp := strings.Split(*currentVersion, ".")
 		verPart, _ := strconv.Atoi(sp[0])
 		sp[0] = strconv.Itoa(verPart + 1)
 		sp[1] = strconv.Itoa(0)
@@ -201,13 +204,11 @@ func (ghp *GithubProvider) calculateNextVersion(currentVersion *string, major *b
 		nextVersion = strings.Join(sp, ".")
 
 	} else if *minor {
-		sp := strings.Split(*currentVersion, ".")
 		verPart, _ := strconv.Atoi(sp[1])
 		sp[1] = strconv.Itoa(verPart + 1)
 		sp[2] = strconv.Itoa(0)
 		nextVersion = strings.Join(sp, ".")
 	} else if *patch {
-		sp := strings.Split(*currentVersion, ".")
 		verPart, _ := strconv.Atoi(sp[2])
 		sp[2] = strconv.Itoa(verPart + 1)
 		nextVersion = strings.Join(sp, ".")
