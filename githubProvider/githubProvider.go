@@ -52,6 +52,9 @@ func (ghp *GithubProvider) GenerateReleaseText(mainRepo []string, coreRepos [][]
 		coreChanges, changeErr := ghp.getChangesSinceRelease(lastRelease, coreRepo[0], coreRepo[1])
 		tu.CheckWarn(changeErr)
 		releaseText = append(releaseText, "## Changes to "+coreRepo[0]+"/"+coreRepo[1]+":\n")
+		if len(coreChanges) == 0 {
+			releaseText = append(releaseText, " - No changes in this version")
+		}
 		for _, coreChange := range coreChanges {
 			releaseText = append(releaseText, fmt.Sprintf("  - %s see %s/%s/pull/%d \n", coreChange.Title, coreRepo[0], coreRepo[1], coreChange.PrNum))
 		}
