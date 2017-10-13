@@ -2,6 +2,7 @@ package tutils
 
 import (
 	"fmt"
+	"os"
 )
 
 func Check(err error) bool {
@@ -24,5 +25,6 @@ func CheckWarn(err error) {
 func CheckExit(err error) {
 	if Check(err) != true {
 		fmt.Printf("[Fatal] %s \n", err)
+		os.Exit(1)
 	}
 }

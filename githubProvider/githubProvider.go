@@ -6,8 +6,8 @@ import (
 	"strconv"
 	"strings"
 
-	tu "github.com/toshbrown/GHR/tutils"
 	"github.com/google/go-github/github"
+	tu "github.com/toshbrown/GHR/tutils"
 	"golang.org/x/oauth2"
 )
 
@@ -33,7 +33,7 @@ func New(accessToken string) *GithubProvider {
 func (ghp *GithubProvider) GenerateReleaseText(mainRepo []string, coreRepos [][]string, otherRepos [][]string, major *bool, minor *bool, patch *bool) ([]string, string) {
 
 	changes, lastRelease, GhpErr := ghp.getChangesSinceLastRelease(mainRepo[0], mainRepo[1])
-	tu.CheckWarn(GhpErr)
+	tu.CheckExit(GhpErr)
 
 	currentVersion := lastRelease.TagName
 	nextVersion := ghp.calculateNextVersion(currentVersion, major, minor, patch)
