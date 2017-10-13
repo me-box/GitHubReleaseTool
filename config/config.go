@@ -31,7 +31,7 @@ func ConfigFromFile(path string) (Config, error) {
 	}
 
 	if cfg.AccessToken == "" {
-		return Config{}, errors.New("AccessToken must be set in the config file. \n You can create a \"Personal access token\" here https://github.com/settings/tokens")
+		return Config{}, errors.New("AccessToken must be set in the config file. \n You can create a \"Personal access token\" here https://github.com/settings/tokens requires public_repo access ")
 	}
 
 	if cfg.Username == "" {

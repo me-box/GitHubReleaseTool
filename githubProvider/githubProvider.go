@@ -137,8 +137,10 @@ func (ghp *GithubProvider) DoRelease(mainRepo []string, coreRepos [][]string, ot
 		Name:    &relName,
 		Body:    &relText,
 	}
-	ghp.client.Repositories.CreateRelease(ghp.ctx, mainRepo[0], mainRepo[1], &release)
 
+	_, resp, tagErr := ghp.client.Repositories.CreateRelease(ghp.ctx, mainRepo[0], mainRepo[1], &release)
+	tu.CheckWarn(tagErr)
+	fmt.Println(resp)
 }
 
 type changes struct {
