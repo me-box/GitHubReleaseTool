@@ -2,11 +2,15 @@ package githubProvider
 
 import (
 	"context"
+	"encoding/base64"
+	"errors"
 	"fmt"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/google/go-github/github"
+	config "github.com/toshbrown/GHR/config"
 	tu "github.com/toshbrown/GHR/tutils"
 	"golang.org/x/oauth2"
 )
@@ -27,6 +31,87 @@ func New(accessToken string) *GithubProvider {
 	tc := oauth2.NewClient(ghp.ctx, ts)
 	ghp.client = github.NewClient(tc)
 	return &ghp
+}
+
+//GenerateDocs gets the Readme.md files from mainRepo and coreRepos and genrates a single file
+func (ghp *GithubProvider) GenerateDocs(pages config.Documentation) ([]string, error) {
+
+	// front matter
+	t := time.Now()
+	gentime := t.Format("Mon Jan _2 15:04:05 2006")
+	var docs []string
+	docs = append(docs, "# Databox Documentation \n\n")
+	docs = append(docs, "### Version: X.X.X \n\n")
+	docs = append(docs, "### generated:"+gentime+" \n\n")
+	docs = append(docs, "---\n\n")
+
+	// TOC
+	docs = append(docs, "# Table of Contents")
+	docs = append(docs, " * Platform Overview")
+	for _, page := range pages.Overview {
+		docs = append(docs, "   * ["+page[3]+"](#"+stripDash(page[1])+")")
+	}
+	docs = append(docs, " * Core Components")
+	for _, page := range pages.Core {
+		docs = append(docs, "   * ["+page[3]+"](#"+stripDash(page[1])+")")
+	}
+
+	docs = append(docs, " * Development Libraries")
+	for _, page := range pages.Libs {
+		docs = append(docs, "   * ["+page[3]+"](#"+stripDash(page[1])+")")
+	}
+
+	docs = append(docs, " * Other")
+	for _, page := range pages.Other {
+		docs = append(docs, "   * ["+page[3]+"](#"+stripDash(page[1])+")")
+	}
+	docs = append(docs, "---\n\n")
+
+	//get readme from Overview
+	for _, page := range pages.Overview {
+		readme, err := ghp.getDoc(page[0], page[1], page[2])
+		if err != nil {
+			return nil, err
+		}
+		docs = append(docs, "<a name=\"#"+stripDash(page[1])+"\"></a>")
+		docs = append(docs, readme)
+		docs = append(docs, "---\n\n")
+	}
+
+	//append readmes from Core
+	for _, page := range pages.Core {
+		readme, err := ghp.getDoc(page[0], page[1], page[2])
+		if err != nil {
+			return nil, err
+		}
+		docs = append(docs, "<a name=\"#"+stripDash(page[1])+"\"></a>")
+		docs = append(docs, readme)
+		docs = append(docs, "---\n\n")
+	}
+
+	//append readmes from Libs
+	for _, page := range pages.Libs {
+		readme, err := ghp.getDoc(page[0], page[1], page[2])
+		if err != nil {
+			return nil, err
+		}
+		docs = append(docs, "<a name=\"#"+stripDash(page[1])+"\"></a>")
+		docs = append(docs, readme)
+		docs = append(docs, "---\n\n")
+	}
+
+	//append readmes from Other
+	for _, page := range pages.Other {
+		readme, err := ghp.getDoc(page[0], page[1], page[2])
+		if err != nil {
+			return nil, err
+		}
+		docs = append(docs, "<a name=\"#"+stripDash(page[1])+"\"></a>")
+		docs = append(docs, readme)
+		docs = append(docs, "---\n\n")
+	}
+
+	return docs, nil
 }
 
 //GenerateReleaseText gets the last release form mainRepo then looks for PR on mainRepo, coreRepos,  otherRepos since the last version and genorates a change log
@@ -53,7 +138,7 @@ func (ghp *GithubProvider) GenerateReleaseText(mainRepo []string, coreRepos [][]
 		tu.CheckWarn(changeErr)
 		releaseText = append(releaseText, "## Changes to "+coreRepo[0]+"/"+coreRepo[1]+":\n")
 		if len(coreChanges) == 0 {
-			releaseText = append(releaseText, " - No changes in this version")
+			releaseText = append(releaseText, " - No changes in this version\n\n")
 		}
 		for _, coreChange := range coreChanges {
 			releaseText = append(releaseText, fmt.Sprintf("  - %s see %s/%s/pull/%d \n", coreChange.Title, coreRepo[0], coreRepo[1], coreChange.PrNum))
@@ -219,4 +304,30 @@ func (ghp *GithubProvider) calculateNextVersion(currentVersion *string, major *b
 		nextVersion = strings.Join(sp, ".")
 	}
 	return nextVersion
+}
+
+func (ghp *GithubProvider) getDoc(owner string, repo string, docPath string) (string, error) {
+
+	opt := &github.RepositoryContentGetOptions{}
+
+	fileContent, _, resp, err := ghp.client.Repositories.GetContents(ghp.ctx, owner, repo, docPath, opt)
+
+	if err != nil {
+		return "", err
+	}
+
+	if resp.StatusCode != 200 {
+		return "", errors.New("Invalid status code: " + resp.Status)
+	}
+
+	str, decodeError := base64.StdEncoding.DecodeString(*fileContent.Content)
+	if decodeError != nil {
+		return "", decodeError
+	}
+
+	return string(str), err
+}
+
+func stripDash(str string) string {
+	return strings.Replace(str, "-", "", -1)
 }

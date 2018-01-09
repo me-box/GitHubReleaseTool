@@ -1,9 +1,22 @@
 {
-    "Username":"toshBrown",
+    "Username":"",
 	"AccessToken": "",
-	"MainRepo": ["toshbrown","GHR"],
+	"MainRepo": ["Toshbrown","GHR"],
 	"CoreRepos":[
-		["toshbrown","GHR-core-test"]
+		["Toshbrown","GHR-core-test"]
 	],
-	"OtherRepos": [["toshbrown","GHR-other-test"]]
+	"OtherRepos": [["Toshbrown","GHR-other-test"]],
+	"Docs": {
+		"Overview": [
+			["Toshbrown","GHR","/README.md","Getting started"]
+		],
+		"Core": [
+			["Toshbrown","GHR-core-test", "/README.md", "Core Component"]
+		],
+		"Libs": [
+		],
+		"Other": [
+			["Toshbrown","GHR-other-test","/README.md","Other Component"]
+		]
+	}
 }

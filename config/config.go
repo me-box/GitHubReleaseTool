@@ -6,12 +6,19 @@ import (
 	"io/ioutil"
 )
 
+type Documentation struct {
+	Overview [][]string
+	Core     [][]string
+	Libs     [][]string
+	Other    [][]string
+}
 type Config struct {
 	Username    string
 	AccessToken string
 	MainRepo    []string
 	CoreRepos   [][]string
 	OtherRepos  [][]string
+	Docs        Documentation
 }
 
 //ConfigFromFile Loads a config from a json file

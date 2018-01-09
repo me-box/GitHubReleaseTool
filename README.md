@@ -11,6 +11,9 @@ A tool to manage releases across mutual GitHub repos
    - Tag the main repo and all core components with the new version using the GitHub API
    - Create/Update the Version file in the main databox repo
    - Create the release on the main repo using the GitHub API with the generated changelog
+- if the -docs tag is enabled
+  - build a documents files from the repos listed in the Docs section of the config file
+  - Todo: upload the docs with a release
 
 ## Building
 ```
@@ -24,11 +27,17 @@ A tool to manage releases across mutual GitHub repos
 ## Usage
 ```
   -config string
-    	path of the config file (default "./config.json")
+        path of the config file (default "./config.json")
+  -docs
+        build docs from Readme.md files in main and core repos
+  -docsOutFile string
+        Where should the docs be output (default "./Documtation.md")
   -major
-    	Major release
+        Major release
   -minor
-    	Minor release
+        Minor release
   -patch
-    	Patch/Bugfix release (default true)
+        Patch/Bugfix release (default true)
+  -release
+        set this to false (-release=false) disable releasing (for example if you just want to rebuild the docs) (default true)
 ```
