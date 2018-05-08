@@ -1,14 +1,14 @@
 {
     "Username":"",
 	"AccessToken": "",
-	"MainRepo": ["Toshbrown","GHR"],
+	"MainRepo": ["me-box","GitHubReleaseTool"],
 	"CoreRepos":[
 		["Toshbrown","GHR-core-test"]
 	],
 	"OtherRepos": [["Toshbrown","GHR-other-test"]],
 	"Docs": {
 		"Overview": [
-			["Toshbrown","GHR","/README.md","Getting started"]
+			["me-box","GitHubReleaseTool","/README.md","Getting started"]
 		],
 		"Core": [
 			["Toshbrown","GHR-core-test", "/README.md", "Core Component"]

@@ -8,9 +8,9 @@ import (
 	"os"
 	"strings"
 
-	config "github.com/toshbrown/GHR/config"
-	"github.com/toshbrown/GHR/githubProvider"
-	tu "github.com/toshbrown/GHR/tutils"
+	config "github.com/me-box/GitHubReleaseTool/config"
+	"github.com/me-box/GitHubReleaseTool/githubProvider"
+	tu "github.com/me-box/GitHubReleaseTool/tutils"
 )
 
 func main() {
@@ -22,12 +22,24 @@ func main() {
 	configPatch := flag.Bool("patch", true, "Patch/Bugfix release")
 	configDocs := flag.Bool("docs", false, "build docs from Readme.md files in main and core repos")
 	configRelease := flag.Bool("release", true, "set this to false (-release=false) disable releasing (for example if you just want to rebuild the docs)")
-	configDocsFile := flag.String("docsOutFile", "./Documtation.md", "Where should the docs be output")
+	configDocsFile := flag.String("docsOutFile", "./Documentation.md", "Where should the docs be output")
+	AccessToken := flag.String("AccessToken", "", "Github AccessToken option overides value in config file")
 	flag.Parse()
 
 	//load config file
 	cfg, err := config.ConfigFromFile(*configPath)
-	tu.CheckExit(err)
+	if err != nil {
+		switch err.(type) {
+		case config.AccessTokenError:
+			if *AccessToken != "" {
+				cfg.AccessToken = *AccessToken
+			} else {
+				tu.CheckExit(err)
+			}
+		default:
+			tu.CheckExit(err)
+		}
+	}
 
 	ghp := githubProvider.New(cfg.AccessToken)
 
