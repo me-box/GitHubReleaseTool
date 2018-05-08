@@ -44,7 +44,7 @@ func ConfigFromFile(path string) (Config, error) {
 	}
 
 	if cfg.AccessToken == "" {
-		return Config{}, AccessTokenError{}
+		return cfg, AccessTokenError{}
 	}
 
 	if cfg.Username == "" {
