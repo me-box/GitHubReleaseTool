@@ -8,9 +8,9 @@ import (
 	"os"
 	"strings"
 
-	config "github.com/toshbrown/GHR/config"
-	"github.com/toshbrown/GHR/githubProvider"
-	tu "github.com/toshbrown/GHR/tutils"
+	config "github.com/me-box/GitHubReleaseTool/config"
+	"github.com/me-box/GitHubReleaseTool/githubProvider"
+	tu "github.com/me-box/GitHubReleaseTool/tutils"
 )
 
 func main() {

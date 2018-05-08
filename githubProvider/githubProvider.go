@@ -10,8 +10,8 @@ import (
 	"time"
 
 	"github.com/google/go-github/github"
-	config "github.com/toshbrown/GHR/config"
-	tu "github.com/toshbrown/GHR/tutils"
+	config "github.com/me-box/GitHubReleaseTool/config"
+	tu "github.com/me-box/GitHubReleaseTool/tutils"
 	"golang.org/x/oauth2"
 )
 
