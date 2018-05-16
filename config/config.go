@@ -27,7 +27,7 @@ func (e AccessTokenError) Error() string {
 	return "AccessToken must be set in the config file or provided by the --AccessToken flag. \n You can create a \"Personal access token\" here https://github.com/settings/tokens requires public_repo access "
 }
 
-//ConfigFromFile Loads a config from a json file
+// ConfigFromFile Loads a config from a json file
 func ConfigFromFile(path string) (Config, error) {
 
 	var cfg Config
