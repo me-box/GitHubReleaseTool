@@ -1,28 +1,31 @@
 # GitHub Release Tool
 
-A tool to coordinate a release across multiple GitHub repositories. 
+A tool to coordinate a release across multiple GitHub repositories.
 
-## It Will
+Using the `config.json` it will:
 
-- Look at the tags on the main repo (in config.json) and calculate the next
-  version using semvar (Major, Minor, Patch)
-- Collate All PRs across main and core repos (in config.json) into a changelog
-- Present a List of proposed changes so that the user can double check and
-  cancel if necessary
-- If the user agrees
-   - Tag the main repo and all core components with the new version using the GitHub API
-   - Create/Update the Version file in the main databox repo
-   - Create the release on the main repo using the GitHub API with the generated changelog
-- if the -docs tag is enabled
-  - build a documents files from the repos listed in the Docs section of the config file
-  - Todo: upload the docs with a release
+  * Based on tags on the designated `MainRepo`, calculate the next version using semantic versioning (Major, Minor, Patch)
+  * Collate all PR messages since the last release across the `MainRepo` and any `CoreRepos` into a `CHANGELOG`
+  * Present a list of proposed changes so the user can double check
+  * If the user agrees to go ahead it will use the GitHub API to:
+    * Tag the `MainRepo` and all `CoreRepos` with the new version
+    * Create or update the `Version` file in the main Databox repo
+    * Create a release on the `MainRepo`  with the generated `CHANGELOG`
+    * If the `-docs` flag is given:
+      * Build a documentation file from the `README.md` files in the  repos indicated in the `Docs` section
+      * Upload the generated documentation under a release [TODO]
 
 ## Building
 
 ```
-go get github.com/Toshbrown/GHR
-cd [to go path]/src/github.com/Toshbrown/GHR
+go get github.com/me-box/GitHubReleaseTool
+cd [to go path]/src/github.com/me-box/GitHubReleaseTool
 go build ghrelease.go
+```
+
+or to build in a container
+```
+make build # produces me-box/ghrelease
 ```
 
 ## Usage
@@ -31,17 +34,17 @@ go build ghrelease.go
   -config string
         path of the config file (default "./config.json")
   -docs
-        build docs from Readme.md files in main and core repos
+        build docs from README.md files in main and core repos
   -docsOutFile string
-        Where should the docs be output (default "./Documtation.md")
+        Where should the docs be output (default "./Documentation.md")
   -major
         Major release
   -minor
         Minor release
   -patch
-        Patch/Bugfix release (default true)
+        Patch/Bugfix release (default: true)
   -release
-        set this to false (-release=false) disable releasing (for example if you just want to rebuild the docs) (default true)
+        set this to `false` to disable releasing (for example if you just want to rebuild the docs) (default: true)
 ```
 
 ## Acknowledgements
