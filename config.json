@@ -1,22 +1,24 @@
 {
-    "Username":"",
-	"AccessToken": "",
-	"MainRepo": ["me-box","GitHubReleaseTool"],
-	"CoreRepos":[
-		["Toshbrown","GHR-core-test"]
-	],
-	"OtherRepos": [["Toshbrown","GHR-other-test"]],
-	"Docs": {
-		"Overview": [
-			["me-box","GitHubReleaseTool","/README.md","Getting started"]
-		],
-		"Core": [
-			["Toshbrown","GHR-core-test", "/README.md", "Core Component"]
-		],
-		"Libs": [
-		],
-		"Other": [
-			["Toshbrown","GHR-other-test","/README.md","Other Component"]
-		]
-	}
+  "Username":"",
+  "AccessToken": "",
+  "MainRepo": ["me-box", "GitHubReleaseTool"],
+  "CoreRepos":[
+    ["Toshbrown", "GHR-core-test"]
+  ],
+  "OtherRepos": [
+    ["Toshbrown", "GHR-other-test"]
+  ],
+  "Docs": {
+    "Overview": [
+      ["me-box", "GitHubReleaseTool", "/README.md", "Getting started"]
+    ],
+    "Core": [
+      ["Toshbrown", "GHR-core-test", "/README.md", "Core Component"]
+    ],
+    "Libs": [
+    ],
+    "Other": [
+      ["Toshbrown", "GHR-other-test", "/README.md", "Other Component"]
+    ]
+  }
 }
